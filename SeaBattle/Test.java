@@ -12,7 +12,7 @@ public class Test {
 
         // Однопалубный корабль
         int[][] singleDeck3 = {{-1}, {2}};
-        System.out.println("True - singleDeck3 " + Ship.checkCoordinates(singleDeck3)+ '\n'); // true
+        System.out.println("False - singleDeck3 " + Ship.checkCoordinates(singleDeck3)+ '\n'); // false
 
         // Горизонтальный корабль (3 палубы)
         int[][] horizontal = {{3, 3, 3}, {1, 2, 3}};
@@ -57,5 +57,11 @@ public class Test {
         // Некорректный корабль (null)
         int[][] nullShip = null;
         System.out.println("False - nullShip " + Ship.checkCoordinates(nullShip)+ '\n'); // false
+
+
+        // Проверка Создания корабля
+        Ship ship = new Ship(horizontal); // True
+        // Проверка информации о корабле
+        System.out.println(ship);
     }
 }

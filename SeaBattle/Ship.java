@@ -4,6 +4,27 @@ import java.util.Arrays;
 
 public class Ship {
     private int [][] coordinates = new int[2][]; //Координаты корабля хранятся в виде [0] - все X координаты, [1] - все Y координаты
+    private String name;
+
+    public Ship(int[][] coordinates) {
+        if (setCoordinates(coordinates)) {
+            System.out.println("Ship created");
+        } else {
+            System.out.println("Ship not created");
+        }
+    }
+
+    public int[][] getCoordinates() {
+        return coordinates;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String toString() {
+        return name + "\nX: " + Arrays.toString(coordinates[0]) + "\nY: " + Arrays.toString(coordinates[1]);
+    }
 
     /**
      * Создание корабля любого типа (задание координат)
@@ -14,11 +35,25 @@ public class Ship {
     public boolean setCoordinates(int [][] coordinates) {
         if (checkCoordinates(coordinates)) {
             this.coordinates = coordinates;
+            checkName();
             return true;
         }
         return false;
     }
 
+    public void checkName() {
+        if (coordinates[0].length == 1 && coordinates[1].length == 1) {
+            this.name = "One-part ship";
+        } else if (coordinates[0].length == 2 && coordinates[1].length == 2) {
+            this.name = "Two-part ship";
+        } else if (coordinates[0].length == 3 && coordinates[1].length == 3) {
+            this.name = "Three-part ship";
+        } else if (coordinates[0].length == 4 && coordinates[1].length == 4) {
+            this.name = "Four-part ship";
+        } else { 
+            System.out.println("Unknown ship");
+        }
+    }
 
     /**
      * Проверяет корректность координат корабля.
@@ -27,7 +62,6 @@ public class Ship {
      * @return true, если координаты корректны, иначе false.
      */
     public static boolean checkCoordinates(int[][] coordinates) {
-
         
         // Проверка на размерность массива
         if (coordinates == null || coordinates.length != 2) {
