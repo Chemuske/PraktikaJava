@@ -26,59 +26,92 @@ public class Ship {
      * @param coordinates Двумерный массив с координатами (X, Y).
      * @return true, если координаты корректны, иначе false.
      */
-    private static boolean checkCoordinates(int [][] coordinates) { //TODO: Переделать без массива checkCoordinates
+    public static boolean checkCoordinates(int[][] coordinates) {
 
-        int[][] checkCoordinates = Arrays.copyOfRange(coordinates, 0, coordinates.length);
-
-        // Проверка, что кол-во координат корректно
-        if (checkCoordinates.length != 2) {
+        
+        // Проверка на размерность массива
+        if (coordinates == null || coordinates.length != 2) {
             System.out.println("FAILED check coordinates");
             return false;
         }
-        if (checkCoordinates[0].length > 4 & checkCoordinates[0].length < 1 && checkCoordinates[1].length > 4 && checkCoordinates[1].length < 1) {
+
+        if (coordinates[0].length != coordinates[1].length || coordinates[0].length > 4 || coordinates[0].length < 1 || coordinates[1].length > 4 || coordinates[1].length < 1) {
             System.out.println("Incorrect ship size");
             return false;
         }
         
+        int[][] checkCoordinates = Arrays.copyOfRange(coordinates, 0, coordinates.length);
+
         // Проверка однопалубного корабля
-        if (coordinates[0].length == 1 || coordinates[1].length == 1) {
-            if (coordinates[0][0] == coordinates[1][0]) {
+        if (coordinates[0].length == 1 && coordinates[1].length == 1) {
+            int x = coordinates[0][0];
+            int y = coordinates[1][0];
+
+            if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
                 return true;
+            } else {
+                System.out.println("Coordinates out of bounds");
+                return false;
             }
         }
-
-        // Сортировка массива для проверки по X и Y
+        // Сортировка координат
         for (int i = 0; i < checkCoordinates.length; i++) {
             Arrays.sort(checkCoordinates[i]);
         }
 
         // Проверка горизонтальной линии (X постоянный, Y последовательный)
         if (checkCoordinates[0][0] == checkCoordinates[0][checkCoordinates[0].length - 1]) {
-            for (int i = 1; i < checkCoordinates.length; i++) {
-                if (checkCoordinates[1][i-1] < 0 && checkCoordinates[1][i-1] > 9) {
+
+            if (checkCoordinates[1][0] < 0 || checkCoordinates[1][0] > 9) {
+                System.out.println("Y coordinates must be between 0 and 9");
+                return false;
+            }
+            for (int i = 1; i < checkCoordinates[0].length; i++) {
+                int y = checkCoordinates[1][i];
+
+                // Проверка границ Y
+                if (y < 0 || y > 9) {
                     System.out.println("Y coordinates must be between 0 and 9");
                     return false;
                 }
-                if (checkCoordinates[1][i-1] + 1 != checkCoordinates[1][i]) {
+
+                // Проверка последовательности Y
+                if (checkCoordinates[1][i - 1] + 1 != y) {
                     System.out.println("Y coordinates are not valid");
                     return false;
                 }
             }
-        } else if (checkCoordinates[1][0] == checkCoordinates[1][checkCoordinates[1].length - 1]) {
-            for (int i = 1; i < checkCoordinates.length; i++) {
-                if (checkCoordinates[0][i-1] < 0 && checkCoordinates[0][i-1] > 9) {
+            return true;
+        }
+
+        // Проверка вертикальной линии (Y постоянный, X последовательный)
+        if (checkCoordinates[1][0] == checkCoordinates[1][checkCoordinates[1].length - 1]) {
+
+            if (checkCoordinates[0][0] < 0 || checkCoordinates[0][0] > 9) {
+                System.out.println("X coordinates must be between 0 and 9");
+                return false;
+            }
+
+            for (int i = 1; i < checkCoordinates[0].length; i++) {
+                int x = checkCoordinates[0][i];
+
+                // Проверка границ X
+                if (x < 0 || x > 9) {
                     System.out.println("X coordinates must be between 0 and 9");
                     return false;
                 }
-                if (checkCoordinates[0][i-1] + 1 != checkCoordinates[0][i]) {
+
+                // Проверка последовательности X
+                if (checkCoordinates[0][i - 1] + 1 != x) {
                     System.out.println("X coordinates are not valid");
                     return false;
                 }
             }
-        } else if (checkCoordinates[0][0] != checkCoordinates[0][checkCoordinates[0].length - 1] || checkCoordinates[1][0] != checkCoordinates[1][checkCoordinates[1].length - 1]) {
-            System.out.println("X and Y coordinates are not valid");
-            return false;
+            return true;
         }
-        return true;
+
+        // Если не прошли ни одну из проверок
+        System.out.println("X and Y coordinates are not valid");
+        return false;
     }
 }
