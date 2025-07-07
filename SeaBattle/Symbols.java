@@ -1,7 +1,7 @@
 package SeaBattle;
 
 public enum Symbols {
-    SHIP("🚢"), WATER("🌊"), CROSS("❌"), BOOM("💥"), OREOL("🛑");
+    SHIP("🚢"), WATER("🌊"), MISS("❌"), DAMAGE("💥"), OREOL("🛑");
     
     private final String symbol;
 
