@@ -3,7 +3,7 @@ package SeaBattle;
 import java.util.Arrays;
 
 public class Ship {
-    private int [][] coordinates = new int[2][]; //Координаты корабля хранятся в виде [0] - все X координаты, [1] - все Y координаты
+    private int [][] coordinates = new int[2][];  //Координаты корабля хранятся в виде [0] - все X координаты, [1] - все Y координаты
     private String name;
     private int health;
 
