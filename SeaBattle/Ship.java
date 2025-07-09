@@ -8,11 +8,12 @@ public class Ship {
     private int health;
 
     public Ship(int[][] coordinates) {
-        if (setCoordinates(coordinates)) {
-            System.out.println("Ship created");
-        } else {
-            System.out.println("Ship not created");
-        }
+        setCoordinates(coordinates);
+        // if (setCoordinates(coordinates)) {
+            // System.out.println("Ship created");
+        // } else {
+            // System.out.println("Ship not created");
+        // }
     }
 
     public int[][] getCoordinates() {
@@ -37,7 +38,7 @@ public class Ship {
      * @param coordinates Двумерный массив с координатами (X, Y).
      * @return true, если корабль создан, иначе false.
     */
-    public boolean setCoordinates(int [][] coordinates) {
+    private boolean setCoordinates(int [][] coordinates) {
         if (checkCoordinates(coordinates)) {
             this.coordinates = coordinates;
             setStats();
@@ -113,7 +114,7 @@ public class Ship {
      * @param coordinates Двумерный массив с координатами (X, Y).
      * @return true, если координаты корректны, иначе false.
      */
-    public static boolean checkCoordinates(int[][] coordinates) {
+    public static boolean checkCoordinates(int[][] coordinates) { //public - для тестов из Test.java
         
         // Проверка на размерность массива
         if (coordinates == null || coordinates.length != 2) {

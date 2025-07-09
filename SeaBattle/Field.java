@@ -91,12 +91,12 @@ public class Field {
      * Меняет значение клетки в зависимости от попадания в воду или в корабль
      * @param x - координата по оси X
      * @param y - координата по оси Y
-     * @return true - если координаты корректны и цель - корабль или вода, false - если координаты некорректны или цель - попадание
+     * @return -1 - если координаты некорректны, 0 - если промах, 1 - если попадание
      */
-    public boolean damage(int x, int y) {
+    public int damage(int x, int y) {
         if (x < 0 || x > 9 || y < 0 || y > 9) {
             System.out.println("Координаты некорректны");
-            return false;
+            return -1;
         }
 
         if (field[x][y] == Symbols.SHIP) {
@@ -114,14 +114,37 @@ public class Field {
                     }
                 }
             }
-            return true;
+            return 1;
         } else if (field[x][y] == Symbols.WATER) {
             field[x][y] = Symbols.MISS;
-            return true;
+            return 0;
         } else {
             System.out.println("Вы уже стреляли в эту клетку");
-            return false;
+            return -1;
         }
+    }
+
+    /**
+     * Возвращает копию поля, скрывающую символы кораблей (Symbols.SHIP).
+     * 
+     * @return Копия поля с заменёнными символами кораблей на Symbols.WATER.
+     */
+    public Symbols[][] getFieldWithoutShips() {
+        
+        Symbols[][] hiddenField = new Symbols[10][10];
+        for (int i = 0; i < 10; i++) {
+            System.arraycopy(field[i], 0, hiddenField[i], 0, 10);
+        }
+
+        for (int x = 0; x < 10; x++) {
+            for (int y = 0; y < 10; y++) {
+                if (hiddenField[x][y] == Symbols.SHIP) {
+                    hiddenField[x][y] = Symbols.WATER;
+                }
+            }
+        }
+
+        return hiddenField;
     }
 
     /**
@@ -129,7 +152,7 @@ public class Field {
      * @param ship - корабль для которого нужно получить ореолы
      * @return oreol - копия поля с ореолами корабля
      */
-    public Symbols[][] setOreol(Ship ship) {
+    private Symbols[][] setOreol(Ship ship) {
         // Создаем копию поля и копируем в него field
         Symbols[][] oreol = new Symbols[10][10];
         for (int i = 0; i < 10; i++) {
@@ -234,5 +257,35 @@ public class Field {
             System.out.println();
         }
         System.out.println("Y    |  |  |  |  |  |  |  |  |  |\n  X  0  1  2  3  4  5  6  7  8  9");
+    }
+
+    /**
+     * Выводит два поля рядом друг с другом в консоль.
+     * 
+     * @param field1 Первое поле для отображения.
+     * @param field2 Второе поле для отображения.
+     */
+    public static void printFieldsSideBySide(Symbols[][] field1, Symbols[][] field2) {
+        for (int i = 9; i >= 0; i--) {
+            StringBuilder row1 = new StringBuilder();
+            StringBuilder row2 = new StringBuilder();
+
+            // Строим строку первого поля
+            for (int j = 0; j < 10; j++) {
+                row1.append(field1[j][i]).append(" ");
+            }
+
+            // Строим строку второго поля
+            for (int j = 0; j < 10; j++) {
+                row2.append(field2[j][i]).append(" ");
+            }
+
+            // Выводим строки рядом
+            System.out.println(i + " - " + row1.toString() + "   " + i + " - " + row2.toString());
+        }
+
+        // Выводим подписи осей X
+        System.out.println("Y    |  |  |  |  |  |  |  |  |  |         |  |  |  |  |  |  |  |  |  |");
+        System.out.println("  X  0  1  2  3  4  5  6  7  8  9         0  1  2  3  4  5  6  7  8  9");
     }
 }

@@ -1,6 +1,6 @@
 package SeaBattle;
 
-public class Test {
+public class Test { // При удалении Test.java - поменять в классе Ship метод checkCoordinates с public на private
     public static void test() {        
         // Однопалубный корабль
         int[][] singleDeck = {{5}, {5}};

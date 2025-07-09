@@ -3,36 +3,20 @@ package SeaBattle;
 public class Main {
     public static void main(String[] args) {
 
-        //Test.test();
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
         
-        Field field = new Field();
+        player1.startGame(player2);
 
-        int[][] check = {{9, 9}, {9, 8}};
-        int[][] check2 = {{1, 2}, {5, 5}};
-        int[][] check3 = {{5, 5, 5}, {1, 2, 3}};
-        int[][] check4 = {{3}, {1}};
-
-        field.setShip(check);
-        field.setShip(check2);
-        field.setShip(check3);
-        field.setShip(check4);
-        
-        field.printField(field.getAllOreols());
-        field.damage(1, 5);
-        field.damage(2, 5);
-        field.damage(5, 1);
-        field.damage(5, 2);
-        field.damage(5, 3);
-        field.damage(9, 9);
-        field.damage(9, 8);
-        field.printField(field.getField());
-
-        // System.out.println(field.getShips());
-
-        //TODO В классе Field\Player должна учитываться победа и поражение игроков (Если кораблей 0)
-        //TODO В классе Field\Player должен быть метод для начала игры (бесконечный while, пока не произойдет победа или поражение)
-
-        //TODO Создать класс Player в котором должен быть метод для начала игры между двумя игроками (передавая их Field) в качестве агрументов
-        //TODO Изменить доступность всех методов на актуальные
+        // 1,1; 1,3; 1,2; 1,4
+        // 5,1; 5,2; 5,3
+        // 7,6; 7,7; 7,8
+        // 3,3; 3,4
+        // 7,0; 8,0
+        // 9,9; 9,8
+        // 0,9
+        // 0,6
+        // 4,6
+        // 5,8
     }
 }
